@@ -1,4 +1,4 @@
-This **CrewAI Masumi Starter Kit** lets you quickly deploy your own CrewAI agents and integrate them with Masumi’s decentralized payment solution.
+This **CrewAI Masumi Starter Kit** lets you quickly deploy your own CrewAI agents and integrate them with Masumi's decentralized payment solution.
 [Follow this guide](https://docs.masumi.network/documentation/how-to-guides/agent-from-zero-to-hero)
 
 **Key benefits:**
@@ -6,6 +6,33 @@ This **CrewAI Masumi Starter Kit** lets you quickly deploy your own CrewAI agent
 - Simple setup: Just clone, configure, and deploy.
 - Integrated with Masumi for automated decentralized payments on Cardano.
 - Production-ready API built with FastAPI.
+- **NEW: WhatsApp Cloud API integration for group and individual chats!** 📱
+
+## 📱 WhatsApp Chatbot Setup
+
+This project now includes **WhatsApp Cloud API integration**! Your CrewAI agent can respond to messages in WhatsApp groups and individual chats.
+
+👉 **See [WHATSAPP_SETUP.md](./WHATSAPP_SETUP.md) for complete WhatsApp setup instructions**
+
+### Quick Start for WhatsApp
+
+1. Get WhatsApp Cloud API credentials from [developers.facebook.com](https://developers.facebook.com)
+2. Add to your `.env`:
+   ```ini
+   WHATSAPP_ACCESS_TOKEN=your_token
+   WHATSAPP_PHONE_NUMBER_ID=your_phone_id
+   WHATSAPP_VERIFY_TOKEN=your_verify_token
+   ```
+3. Deploy your server and configure webhook at Meta
+4. Add the bot to WhatsApp groups or message it directly!
+
+**Features:**
+
+- ✅ Works in groups and individual chats
+- ✅ Automatic reactions (👀 received, ✅ completed)
+- ✅ Message replies
+- ✅ Long message handling
+- ✅ Error notifications
 
 ---
 
@@ -46,7 +73,16 @@ cp .env.example .env
 Example `.env` configuration:
 
 ```ini
-# Payment Service
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key
+
+# WhatsApp Cloud API (Optional - for WhatsApp integration)
+WHATSAPP_ACCESS_TOKEN=your_whatsapp_access_token
+WHATSAPP_PHONE_NUMBER_ID=your_phone_number_id
+WHATSAPP_API_VERSION=v21.0
+WHATSAPP_VERIFY_TOKEN=your_custom_verify_token
+
+# Payment Service (Optional - for Masumi integration)
 PAYMENT_SERVICE_URL=http://localhost:3001/api/v1
 PAYMENT_API_KEY=your_payment_key
 
@@ -55,9 +91,7 @@ AGENT_IDENTIFIER=your_agent_identifier_from_registration
 PAYMENT_AMOUNT=10000000
 PAYMENT_UNIT=lovelace
 SELLER_VKEY=your_selling_wallet_vkey
-
-# OpenAI API
-OPENAI_API_KEY=your_openai_api_key
+NETWORK=preprod
 ```
 
 #### Get your OpenAI API key from the [OpenAI Developer Portal](https://platform.openai.com/api-keys)
@@ -66,9 +100,9 @@ OPENAI_API_KEY=your_openai_api_key
 
 ### **3. Define Your CrewAI Agents**
 
-Look around the `crew_definition.py` file. It has a basic `ResearchCrew` defined. Here you can define your agent functionality. 
+Look around the `crew_definition.py` file. It has a basic `ResearchCrew` defined. Here you can define your agent functionality.
 
-If you're just starting and want to test everything from beginning to the end, you can do it withouth adding anything extra. 
+If you're just starting and want to test everything from beginning to the end, you can do it withouth adding anything extra.
 
 #### Test your agent:
 
@@ -95,7 +129,7 @@ python main.py
 
 ---
 
-###  **4. Expose Your Agent via API**
+### **4. Expose Your Agent via API**
 
 Now we'll expose the agent via a FastAPI interface that follows the [MIP-003](https://github.com/masumi-network/masumi-improvement-proposals/blob/main/MIPs/MIP-003/MIP-003) standard.
 
@@ -135,7 +169,7 @@ Once installed (locally), your payment service will be available at:
 - Admin Dashboard: http://localhost:3001/admin
 - API Documentation: http://localhost:3001/docs
 
-If you used some other way of deployment, for example with Rialway, you have to find the URL there. 
+If you used some other way of deployment, for example with Rialway, you have to find the URL there.
 
 Verify it's running:
 
@@ -172,10 +206,9 @@ Before accepting payments, register your agent on the Masumi Network.
 
 1. Get your payment source information using [/payment-source/](https://docs.masumi.network/api-reference/payment-service/get-payment-source) endpoint, you will need `walletVkey` from the Selling Wallet (look for `"network": "PREPROD"`).:
 
-
 2.Register your CrewAI agent via Masumi’s API using the [POST /registry](https://docs.masumi.network/api-reference/payment-service/post-registry) endpoint.
 
-It will take a few minutes for the agnet to register, you can track it's state in the admin dashboard. 
+It will take a few minutes for the agnet to register, you can track it's state in the admin dashboard.
 
 3. Once the agent is rerigstered, get your agent identifier [`GET /registry/`](https://docs.masumi.network/api-reference/payment-service/get-registry)
 
@@ -219,10 +252,7 @@ curl -X POST 'http://localhost:3001/api/v1/purchase' \
 
 ## Your agent will process the job and return results once payment is confirmed!
 
-
-
-
- **Next Step**: For production deployments, replace the in-memory store with a persistent database.
+**Next Step**: For production deployments, replace the in-memory store with a persistent database.
 
 ---
 
@@ -232,3 +262,4 @@ curl -X POST 'http://localhost:3001/api/v1/purchase' \
 - [Masumi Documentation](https://docs.masumi.network)
 - [FastAPI](https://fastapi.tiangolo.com)
 - [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnets/tools/faucet)
+# Whatsapp-Agent
