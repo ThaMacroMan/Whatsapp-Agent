@@ -1,46 +1,46 @@
 from crewai import Agent, Crew, Task
 from logging_config import get_logger
 
-class ResearchCrew:
+class AIEducationCrew:
     def __init__(self, verbose=True, logger=None):
         self.verbose = verbose
         self.logger = logger or get_logger(__name__)
         self.crew = self.create_crew()
-        self.logger.info("ResearchCrew initialized")
+        self.logger.info("AIEducationCrew initialized")
 
     def create_crew(self):
-        self.logger.info("Creating research crew with agents")
+        self.logger.info("Creating versatile AI assistant crew")
         
         researcher = Agent(
-            role='Research Analyst',
-            goal='Find and analyze key information',
-            backstory='Expert at extracting information',
+            role='Knowledge Specialist',
+            goal='Provide accurate information on any topic, with special expertise in AI, machine learning, and technology',
+            backstory='Versatile researcher with broad knowledge across many topics. Excels at finding accurate, helpful information whether it\'s about AI, technology, science, or general knowledge. When AI topics are mentioned, provides expert-level insights on machine learning, neural networks, NLP, computer vision, and AI ethics.',
             verbose=self.verbose
         )
 
-        writer = Agent(
-            role='Content Summarizer',
-            goal='Create clear summaries from research',
-            backstory='Skilled at transforming complex information',
+        responder = Agent(
+            role='Helpful Assistant',
+            goal='Create clear, concise responses under 200 characters that help users understand any topic',
+            backstory='Friendly, knowledgeable assistant who can discuss anything from everyday questions to complex technical topics. Specializes in AI and technology but equally comfortable helping with general questions. Always provides accurate, helpful information in a clear, engaging way.',
             verbose=self.verbose
         )
 
-        self.logger.info("Created research and writer agents")
+        self.logger.info("Created versatile assistant agents")
 
         crew = Crew(
-            agents=[researcher, writer],
+            agents=[researcher, responder],
             tasks=[
                 Task(
-                    description='Research: {text}',
-                    expected_output='Detailed research findings about the topic',
+                    description='Research and understand: {text}. If it\'s AI-related, provide expert technical insights. For general topics, provide clear, helpful information.',
+                    expected_output='Accurate, detailed information about the topic, with special depth for AI/tech questions',
                     agent=researcher
                 ),
                 Task(
-                    description='Write summary',
-                    expected_output='Clear and concise summary of the research findings',
-                    agent=writer
+                    description='Create helpful response',
+                    expected_output='Clear, accurate response under 200 characters. For AI topics: be educational and precise. For general topics: be helpful and friendly. Always be informative and engaging.',
+                    agent=responder
                 )
             ]
         )
-        self.logger.info("Crew setup completed")
+        self.logger.info("Versatile AI assistant crew setup completed")
         return crew

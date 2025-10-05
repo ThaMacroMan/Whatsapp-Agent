@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  waha:
+    image: devlikeapro/waha:arm
+    container_name: waha
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./sessions:/app/.sessions
+    environment:
+      - WAHA_WEBHOOK_URL=http://host.docker.internal:8000/webhook
+      - WAHA_WEBHOOK_EVENTS=message
+    restart: unless-stopped
+    networks:
+      - whatsapp-network
+
+  app:
+    build: ./Whatsappagent
+    container_name: whatsapp-bot
+    ports:
+      - "8000:8000"
+    environment:
+      - WAHA_BASE_URL=http://waha:3000
+      - WAHA_SESSION_NAME=default
+      - WEBHOOK_URL=http://host.docker.internal:8000/webhook
+    depends_on:
+      - waha
+    restart: unless-stopped
+    networks:
+      - whatsapp-network
+
+networks:
+  whatsapp-network:
+    driver: bridge
+
+volumes:
+  sessions:
