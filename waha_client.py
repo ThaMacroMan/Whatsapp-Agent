@@ -165,7 +165,7 @@ class WAHAClient:
         Returns:
             API response dictionary
         """
-        url = f"{self.base_url}/api/reaction"
+        url = f"{self.base_url}/api/sendReaction"
         
         payload = {
             "session": self.session_name,
@@ -176,7 +176,7 @@ class WAHAClient:
         
         try:
             async with httpx.AsyncClient(timeout=30.0) as client:
-                response = await client.put(url, json=payload, headers=self.headers)
+                response = await client.post(url, json=payload, headers=self.headers)
                 response.raise_for_status()
                 result = response.json()
                 logger.info(f"Reaction sent successfully: {emoji}")
@@ -185,12 +185,13 @@ class WAHAClient:
             logger.error(f"Error sending reaction: {str(e)}")
             raise
     
-    async def mark_as_read(self, message_id: str) -> Dict[str, Any]:
+    async def mark_as_read(self, message_id: str, chat_id: str = None) -> Dict[str, Any]:
         """
         Mark a message as read
         
         Args:
             message_id: ID of the message to mark as read
+            chat_id: Chat ID where the message is located
         
         Returns:
             API response dictionary
@@ -199,9 +200,11 @@ class WAHAClient:
         
         payload = {
             "session": self.session_name,
-            "msgId": message_id,
-            "chatId": "13065505040@c.us"  # Default chat ID, will be overridden by actual chat
+            "msgId": message_id
         }
+        
+        if chat_id:
+            payload["chatId"] = chat_id
         
         try:
             async with httpx.AsyncClient(timeout=30.0) as client:

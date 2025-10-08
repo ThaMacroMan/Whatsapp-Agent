@@ -1,3 +1,57 @@
+## 🚀 Quick Start
+
+### 1. Start WAHA Docker Service
+
+```bash
+docker-compose up -d
+```
+
+### 2. Start the Python Agent
+
+```bash
+# Activate virtual environment
+source venv/bin/activate
+
+# Start the FastAPI server
+python main.py api
+```
+
+### 3. Configure WAHA Session with Webhooks
+
+**IMPORTANT:** The WAHA session must be configured with webhooks to receive messages!
+
+```bash
+# Stop any existing session
+curl -X POST http://localhost:3000/api/sessions/default/stop
+
+# Start session with webhook configuration
+curl -X POST http://localhost:3000/api/sessions/start \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "default",
+    "config": {
+      "webhooks": [{
+        "url": "http://host.docker.internal:8000/webhook",
+        "events": ["message", "message.any"]
+      }]
+    }
+  }'
+```
+
+### 4. Scan QR Code (if not already authenticated)
+
+Open http://localhost:3000 in your browser and scan the QR code with WhatsApp.
+
+### 5. Test the Bot
+
+Send a message starting with `gg` in any group where the bot is present:
+
+```
+gg what is AI?
+```
+
+The bot will respond with a formatted AI-generated answer!
+
 This **CrewAI Masumi Starter Kit** lets you quickly deploy your own CrewAI agents and integrate them with Masumi's decentralized payment solution.
 [Follow this guide](https://docs.masumi.network/documentation/how-to-guides/agent-from-zero-to-hero)
 
@@ -262,5 +316,7 @@ curl -X POST 'http://localhost:3001/api/v1/purchase' \
 - [Masumi Documentation](https://docs.masumi.network)
 - [FastAPI](https://fastapi.tiangolo.com)
 - [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnets/tools/faucet)
+
 # Whatsapp-Agent
+
 # Whatsapp-Agent

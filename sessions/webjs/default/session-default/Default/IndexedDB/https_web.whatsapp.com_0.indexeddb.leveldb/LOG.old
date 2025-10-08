@@ -1,4 +1,28 @@
-2025/10/05-00:35:57.256 51 Reusing MANIFEST /app/.sessions/webjs/default/session-default/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/10/05-00:35:57.260 51 Recovering log #181
-2025/10/05-00:35:57.268 51 Reusing old log /app/.sessions/webjs/default/session-default/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000181.log 
-2025/10/05-00:36:01.235 57 Manual compaction at level-0 from '\x00%\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00&\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/10/08-19:11:46.716 52 Reusing MANIFEST /app/.sessions/webjs/default/session-default/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/10/08-19:11:46.718 52 Recovering log #290
+2025/10/08-19:11:46.723 52 Reusing old log /app/.sessions/webjs/default/session-default/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000290.log 
+2025/10/08-19:11:48.247 58 Level-0 table #299: started
+2025/10/08-19:11:48.271 58 Level-0 table #299: 302377 bytes OK
+2025/10/08-19:11:48.272 58 Delete type=0 #290
+2025/10/08-19:11:48.272 54 Manual compaction at level-0 from '\x00)\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00*\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/10/08-19:11:48.857 54 Compacting 1@1 + 9@2 files
+2025/10/08-19:11:49.010 54 Generated table #300@1: 44404 keys, 2198217 bytes
+2025/10/08-19:11:49.076 54 Generated table #301@1: 1658 keys, 2139686 bytes
+2025/10/08-19:11:49.149 54 Generated table #302@1: 6679 keys, 2155634 bytes
+2025/10/08-19:11:49.316 54 Generated table #303@1: 28371 keys, 2261064 bytes
+2025/10/08-19:11:49.393 54 Generated table #304@1: 5461 keys, 2132638 bytes
+2025/10/08-19:11:49.486 54 Generated table #305@1: 96293 keys, 2244530 bytes
+2025/10/08-19:11:49.583 54 Generated table #306@1: 107728 keys, 2259597 bytes
+2025/10/08-19:11:49.623 54 Generated table #307@1: 22616 keys, 480418 bytes
+2025/10/08-19:11:49.623 54 Compacted 1@1 + 9@2 files => 15871784 bytes
+2025/10/08-19:11:49.623 54 compacted to: files[ 0 0 8 0 0 0 0 ]
+2025/10/08-19:11:49.624 54 Delete type=2 #288
+2025/10/08-19:11:49.625 54 Delete type=2 #289
+2025/10/08-19:11:49.625 54 Delete type=2 #299
+2025/10/08-19:11:49.625 54 Delete type=2 #296
+2025/10/08-19:11:49.625 54 Delete type=2 #295
+2025/10/08-19:11:49.625 54 Delete type=2 #294
+2025/10/08-19:11:49.625 54 Delete type=2 #293
+2025/10/08-19:11:49.625 54 Delete type=2 #287
+2025/10/08-19:11:49.625 54 Delete type=2 #286
+2025/10/08-19:11:49.625 54 Delete type=2 #292

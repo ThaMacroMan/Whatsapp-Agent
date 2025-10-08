@@ -453,9 +453,11 @@ async def process_waha_message(webhook_data: dict):
         
         logger.info(f"✅ Final chat ID for response: {chat_id}")
         
-        # Skip mark as read and reaction for now - focus on core functionality
-        # await waha_client.mark_as_read(message_id)
-        # await waha_client.send_reaction(chat_id, message_id, "👀")
+        # Mark message as read (reactions disabled - WAHA doesn't support this endpoint)
+        try:
+            await waha_client.mark_as_read(message_id, chat_id)
+        except Exception as e:
+            logger.warning(f"Could not mark as read: {e}")
         
         # Only process text messages
         if message_type not in ["text", "chat"]:
@@ -510,8 +512,7 @@ async def process_waha_message(webhook_data: dict):
         
         logger.info(f"Formatted response: {formatted_response[:50]}...")
         
-        # Skip success reaction for now - focus on core functionality
-        # await waha_client.send_reaction(chat_id, message_id, "✅")
+        # Success reaction disabled - WAHA doesn't support this endpoint
         
         # Send the AI response back to WhatsApp
         try:
@@ -537,15 +538,26 @@ async def process_waha_message(webhook_data: dict):
         logger.error(f"Error processing WAHA message: {str(e)}", exc_info=True)
         # Try to send an error message to the user
         try:
-            chat_id = webhook_data.get("payload", {}).get("chatId")
-            message_id = webhook_data.get("payload", {}).get("id")
-            # Skip error reaction for now - focus on core functionality
-            # await waha_client.send_reaction(chat_id, message_id, "❌")
-            await waha_client.send_text_message(
-                to=chat_id,
-                message="❌ Sorry, I encountered an error processing your message. Please try again later.",
-                reply_to_message_id=message_id
-            )
+            message_data = webhook_data.get("payload", {})
+            message_id = message_data.get("id")
+            
+            # Extract chat_id the same way as in main processing
+            to_field = message_data.get("to")
+            from_field = message_data.get("from")
+            
+            if from_field and "@g.us" in from_field:
+                chat_id = from_field
+            elif to_field and "@g.us" in to_field:
+                chat_id = to_field
+            else:
+                chat_id = to_field
+            
+            if chat_id:
+                await waha_client.send_text_message(
+                    to=chat_id,
+                    message="❌ Sorry, I encountered an error processing your message. Please try again later.",
+                    reply_to_message_id=message_id
+                )
         except Exception as send_error:
             logger.error(f"Failed to send error message: {str(send_error)}")
 
